@@ -4,17 +4,17 @@ from .models import *
 
 @admin.register(Contract)
 class ContractAdmin(admin.ModelAdmin):
-    list_display = ("id", "do", "name", "blob", "date")
+    list_display = ("id", "do", "name", "blob", "created_at")
 
-    def date(self, obj):
-        return obj.created_at.strftime("%d.%m.%Y")
+    # def date(self, obj):
+    #     return obj.created_at.strftime("%d.%m.%Y")
 
 
     def do(self, obj):
         # return Interaction.objects.filter(id=obj.id)
         pass
     list_filter = ()
-    date.short_description = 'date'
+    # date.short_description = 'date'
 
 @admin.register(Org)
 class OrgAdmin(admin.ModelAdmin):

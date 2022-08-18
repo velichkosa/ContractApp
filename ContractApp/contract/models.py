@@ -22,17 +22,17 @@ class Org(models.Model):
 class Interaction(models.Model):
     class Meta:
         # делает уникальным ид
-        unique_together = ("_do", "_po")
+        unique_together = ("do", "po")
 
-    _do = models.ForeignKey(Org, verbose_name='DO', related_name="do", on_delete=models.CASCADE)
-    _po = models.ForeignKey(Org, verbose_name='PO', related_name="po", on_delete=models.CASCADE)
+    do = models.ForeignKey(Org, verbose_name='DO', related_name="do", on_delete=models.CASCADE)
+    po = models.ForeignKey(Org, verbose_name='PO', related_name="po", on_delete=models.CASCADE)
 
     # rate = models.FloatField(verbose_name='Курс')
 
 
 class Contract(models.Model):
 
-    interaction_id = models.ForeignKey(Interaction, on_delete=models.CASCADE)
+    interaction = models.ForeignKey(Interaction, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
     created_at = models.DateTimeField(auto_now_add=True, editable=True)
     blob = models.FileField(upload_to='files/%Y/%m/%d/')
@@ -45,22 +45,22 @@ class Role(models.Model):
 
 class ContractRole(models.Model):
 
-    contract_id = models.ForeignKey(Contract, on_delete=models.CASCADE)
-    role_id = models.ForeignKey(Role, on_delete=models.CASCADE)
+    contract = models.ForeignKey(Contract, on_delete=models.CASCADE)
+    role = models.ForeignKey(Role, on_delete=models.CASCADE)
 
 
 class Users(models.Model):
 
     name = models.CharField(max_length=100)
-    role_id = models.ForeignKey(Role, on_delete=models.CASCADE)
-    org_id = models.ForeignKey(Org, on_delete=models.CASCADE)
+    role = models.ForeignKey(Role, on_delete=models.CASCADE)
+    org = models.ForeignKey(Org, on_delete=models.CASCADE)
     pwd = models.IntegerField(blank=False)
 
 
 class ContractUsers(models.Model):
 
-    contract_id = models.ForeignKey(Contract, on_delete=models.CASCADE)
-    users_id = models.ForeignKey(Users, on_delete=models.CASCADE)
+    contract = models.ForeignKey(Contract, on_delete=models.CASCADE)
+    users = models.ForeignKey(Users, on_delete=models.CASCADE)
 
 
 # class Users(models.Model):
