@@ -14,18 +14,27 @@ class Org(models.Model):
     atr_8 = models.CharField(max_length=30)
     atr_9 = models.CharField(max_length=30)
 
+    def __str__(self):
+        return f'{self.name}'
+
+
 
 class Interaction(models.Model):
+    class Meta:
+        # делает уникальным ид
+        unique_together = ("_do", "_po")
 
-    do_id = models.IntegerField(blank=False)
-    po_id = models.IntegerField(blank=False)
+    _do = models.ForeignKey(Org, verbose_name='DO', related_name="do", on_delete=models.CASCADE)
+    _po = models.ForeignKey(Org, verbose_name='PO', related_name="po", on_delete=models.CASCADE)
+
+    # rate = models.FloatField(verbose_name='Курс')
 
 
 class Contract(models.Model):
 
-    interaction_id = models.IntegerField(blank=False)
+    interaction_id = models.ForeignKey(Interaction, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, editable=True)
     blob = models.FileField(upload_to='files/%Y/%m/%d/')
 
 
@@ -36,21 +45,22 @@ class Role(models.Model):
 
 class ContractRole(models.Model):
 
-    contract_id = models.IntegerField(blank=False)
-    role_id = models.IntegerField(blank=False)
+    contract_id = models.ForeignKey(Contract, on_delete=models.CASCADE)
+    role_id = models.ForeignKey(Role, on_delete=models.CASCADE)
 
 
 class Users(models.Model):
 
     name = models.CharField(max_length=100)
-    role_id = models.IntegerField(blank=False)
-    org_id = models.IntegerField(blank=False)
+    role_id = models.ForeignKey(Role, on_delete=models.CASCADE)
+    org_id = models.ForeignKey(Org, on_delete=models.CASCADE)
+    pwd = models.IntegerField(blank=False)
 
 
 class ContractUsers(models.Model):
 
-    contract_id = models.IntegerField(blank=False)
-    users_id = models.IntegerField(blank=False)
+    contract_id = models.ForeignKey(Contract, on_delete=models.CASCADE)
+    users_id = models.ForeignKey(Users, on_delete=models.CASCADE)
 
 
 # class Users(models.Model):
