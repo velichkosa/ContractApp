@@ -3,6 +3,9 @@ from .views import *
 
 
 urlpatterns = [
-    path('', home),
+    path('', Authentication.as_view(), name='login'),
     path('test/', test),
+    path('contract/', contract),
+    path('home/', home),
+
 ]
