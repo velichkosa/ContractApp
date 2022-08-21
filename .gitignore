@@ -1,4 +1,4 @@
 /db_test_data/
 /venv/
 /django hint
-!/ContractApp/required.txt
+!/ContractApp/requirements.txt
