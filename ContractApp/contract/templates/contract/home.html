@@ -1,6 +1,7 @@
+{% extends 'contract/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
+{% block content %}
+<html>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -19,34 +20,62 @@
       href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
     />
     <!-- MDB -->
-    <link rel="stylesheet" href="{% static 'contract/css/mdb.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'contract/css/core.min.css' %}" />
   </head>
   <body>
-    <!-- Start your project here-->
-<section class="vh-100 gradient-custom">
-  <div class="container py-5 h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
-        <div class="card bg-dark text-white" style="border-radius: 1rem;">
-          <div class="card-body p-5 text-center">
-
-            <div class="mb-md-5 mt-md-4 pb-5">
-
-              <h2 class="fw-bold mb-2 text-uppercase">Пользователь: {{ user.username }}</h2>
-              <p class="text-white-50 mb-5">Введите Ваш логин и пароль</p>
+  <!-- Start your project here-->
 
 
-            <div>
-              <p class="mb-0">Нет аккаунта? <a href="#!" class="text-white-50 fw-bold">Зарегистрироваться</a>
-              </p>
-            </div>
+      <section class="w-100 p-4 text-center">
+        <table class="table">
+          <thead class="table-dark">
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">ДО</th>
+              <th scope="col">ПО</th>
+              <th scope="col">Название договора</th>
+              <th scope="col">Дата договора</th>
 
-          </div>
-        </div>
-      </div>
+            </tr>
+          </thead>
+          <tbody>
+            {% for el in contract %}
+
+            <tr>
+              <th scope="row">{{el.id}}</th>
+              <td>{{ el.do }}</td>
+              <td>{{ el.po }}</td>
+              <td><a href="{{ el.get_absolute_url }}"><p align="center">{{el.name}}</p></a></td>
+              <td>{{el.created_at}}</td>
+            </tr>
+
+            {% endfor %}
+          </tbody>
+        </table>
+      </section>
+
+
+
+    <div class="p-4 text-center border-top mobile-hidden">
+      <a class="btn btn-link px-3" data-mdb-toggle="collapse" href="#example17" role="button" aria-expanded="true" aria-controls="example17" data-ripple-color="hsl(0, 0%, 67%)" style="">
+        <i class="fas fa-code me-md-2"></i>
+        <span class="d-none d-md-inline-block">
+          Show code
+        </span>
+      </a>
+
+
+        <a class="btn btn-link px-3 " data-ripple-color="hsl(0, 0%, 67%)">
+          <i class="fas fa-file-code me-md-2 pe-none"></i>
+          <span class="d-none d-md-inline-block export-to-snippet pe-none">
+            Edit in sandbox
+          </span>
+        </a>
+
     </div>
-  </div>
-</section>
+
+
+
     <!-- End your project here-->
 
     <!-- MDB -->
@@ -55,3 +84,4 @@
     <script type="text/javascript"></script>
   </body>
 </html>
+{% endblock %}

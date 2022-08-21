@@ -1,14 +1,12 @@
 from django.db import models
-from django.db.models import ManyToManyField
+# from django.db.models import ManyToManyField
 from django.urls import reverse  # for absolute_url
 from django.contrib.auth.models import User
 
 
-
-
-
 class Org(models.Model):
 
+    objects = None
     name = models.CharField(max_length=100)
     inn = models.IntegerField(blank=False)
     kpp = models.CharField(max_length=30, blank=True, null=True)
@@ -20,36 +18,43 @@ class Org(models.Model):
     po_atr2 = models.CharField(max_length=30, blank=True, null=True)
     po_atr3 = models.CharField(max_length=30, blank=True, null=True)
 
-    def get_absolute_url(self):
-        return reverse('myurl', kwargs={'id': self.name})
+    # def get_absolute_url(self):
+    #     return reverse('myurl', kwargs={'id': self.name})
 
     def __str__(self):
         return f'{self.name}'
 
 
-class Interaction(models.Model):
-    class Meta:
-        # делает уникальным ид
-        unique_together = ("do", "po")
-    #
-    do = models.ForeignKey(Org, verbose_name='DO', related_name="do", on_delete=models.CASCADE)
-    po = models.ForeignKey(Org, verbose_name='PO', related_name="po", on_delete=models.CASCADE)
-    # do = models.ManyToManyField(Org, related_name="do")
-    # po = models.ManyToManyField(Org, related_name="po")
-    # rate = models.FloatField(verbose_name='Курс')
-    def __str__(self):
-        return f'{self.do} - {self.po}'
+# class Interaction(models.Model):
+#     class Meta:
+#         # делает уникальным ид
+#         unique_together = ("do", "po")
+#     #
+#     do = models.ForeignKey(Org, verbose_name='DO', related_name="do", on_delete=models.CASCADE)
+#     po = models.ForeignKey(Org, verbose_name='PO', related_name="po", on_delete=models.CASCADE)
+#     # do = models.ManyToManyField(Org, related_name="do")
+#     # po = models.ManyToManyField(Org, related_name="po")
+#     # rate = models.FloatField(verbose_name='Курс')
+#     def __str__(self):
+#         return f'{self.do} - {self.po}'
 
 
 class Contract(models.Model):
 
-    interaction = models.ForeignKey(Interaction, on_delete=models.CASCADE)
+    # interaction = models.ForeignKey(Interaction, on_delete=models.CASCADE)
+    objects = None
     name = models.CharField(max_length=30)
     created_at = models.DateTimeField(editable=True, auto_now_add=True)
     blob = models.FileField(upload_to='files/%Y/%m/%d/')
+    do = models.ForeignKey(Org, verbose_name='DO', related_name="do", on_delete=models.CASCADE, default=1)
+    po = models.ForeignKey(Org, verbose_name='PO', related_name="po", on_delete=models.CASCADE, default=11)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('contract_view', kwargs={'contract_id': self.pk})
 
 
 class Role(models.Model):
@@ -60,7 +65,7 @@ class Role(models.Model):
         return self.name
 
 
-class UserProfile(models.Model):  #добавляем в юсеров поля
+class UserProfile(models.Model):  # добавляем в юсеров поля
     user = models.OneToOneField(User, on_delete=models.CASCADE, default=1)
     photo = models.ImageField(upload_to='photo/users', verbose_name='Фото')
     role = models.ForeignKey(Role, on_delete=models.CASCADE)
@@ -83,7 +88,6 @@ class ContractRole(models.Model):
     role = models.ForeignKey(Role, on_delete=models.CASCADE, default='2')
     # contract = ManyToManyField(Contract)
     # role = ManyToManyField(Role)
-
 
 
 # class Users(models.Model):
