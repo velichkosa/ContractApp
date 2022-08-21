@@ -18,8 +18,8 @@ class Org(models.Model):
     po_atr2 = models.CharField(max_length=30, blank=True, null=True)
     po_atr3 = models.CharField(max_length=30, blank=True, null=True)
 
-    # def get_absolute_url(self):
-    #     return reverse('myurl', kwargs={'id': self.name})
+    def get_absolute_url(self):
+        return reverse('myurl', kwargs={'id': self.name})
 
     def __str__(self):
         return f'{self.name}'

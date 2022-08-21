@@ -52,11 +52,11 @@ def home(request):
     return render(request, 'contract/home.html', {'menu': menu, 'contract': get_contract})
 
 
-def test():
+def test(request):
     return HttpResponse('<h1>Test page</h1>')
 
 
-def contract_view(contract_id):
+def contract_view(request, contract_id):
     return HttpResponse(f'DOGOVOR s ID= {contract_id}')
 
 
