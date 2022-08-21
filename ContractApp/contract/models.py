@@ -24,6 +24,10 @@ class Org(models.Model):
     def __str__(self):
         return f'{self.name}'
 
+    class Meta:
+        verbose_name = "Организации"
+        verbose_name_plural = "Организации"
+
 
 # class Interaction(models.Model):
 #     class Meta:
@@ -56,6 +60,10 @@ class Contract(models.Model):
     def get_absolute_url(self):
         return reverse('contract_view', kwargs={'contract_id': self.pk})
 
+    class Meta:
+        verbose_name = "Договора"
+        verbose_name_plural = "Договора"
+
 
 class Role(models.Model):
 
@@ -63,6 +71,10 @@ class Role(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = "Должность"
+        verbose_name_plural = "Должности"
 
 
 class UserProfile(models.Model):  # добавляем в юсеров поля
@@ -89,6 +101,10 @@ class ContractRole(models.Model):
     # contract = ManyToManyField(Contract)
     # role = ManyToManyField(Role)
 
+    class Meta:
+        verbose_name = 'Должность по договору'
+        verbose_name_plural = 'Должности по договору'
+
 
 # class Users(models.Model):
 #     CHOICES = (
@@ -109,6 +125,10 @@ class ContractUsers(models.Model):
 
     contract = models.ForeignKey(Contract, on_delete=models.CASCADE)
     users = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Пользователи по договору'
+        verbose_name_plural = 'Пользователи по договору'
 
 
 # class Users(models.Model):
