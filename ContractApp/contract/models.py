@@ -44,6 +44,18 @@ class Org(models.Model):
 #         return f'{self.do} - {self.po}'
 
 
+class ContractType(models.Model):
+    name = models.CharField(max_length=30, verbose_name='Вид договора')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Вид договора"
+        verbose_name_plural = "Вид договора"
+        ordering = ["name"]
+
+
 class Contract(models.Model):
 
     # interaction = models.ForeignKey(Interaction, on_delete=models.CASCADE)
@@ -54,6 +66,7 @@ class Contract(models.Model):
     do = models.ForeignKey(Org, verbose_name='ДО', related_name="do", on_delete=models.PROTECT, default=1)
     po = models.ForeignKey(Org, verbose_name='ПО', related_name="po", on_delete=models.PROTECT, default=11)
     author = models.ForeignKey(User, on_delete=models.PROTECT, default=1, verbose_name='Автор')
+    type = models.ForeignKey(ContractType, on_delete=models.PROTECT, null=True, verbose_name='Вид договора')
 
     def __str__(self):
         return self.name
@@ -68,7 +81,6 @@ class Contract(models.Model):
 
 
 class Role(models.Model):
-
     name = models.CharField(max_length=30, verbose_name='Наименование')
 
     def __str__(self):
