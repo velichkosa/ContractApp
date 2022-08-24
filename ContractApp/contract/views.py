@@ -71,7 +71,7 @@ def addcontract(request):
                 return redirect('home')
             except Exception:
                 form.add_error(None, 'Ошибка добавления договора')
-
     else:
         form = AddContractForm()
-    return render(request, 'contract/addcontract.html', {'menu': menu, 'form': form})
+    po_list = Org.objects.all()
+    return render(request, 'contract/addcontract.html', {'menu': menu, 'form': form, 'po_list': po_list})

@@ -3,13 +3,12 @@
 {% block content %}
 <h1> CONTRACT </h1>
 <ul>
-  {% for el in posts %}
-  <li>
-      <h2>{{el.name}}</h2>
-      <p>{{el.created_at}}</p>
-      <hr>
-  </li>
-  {% endfor %}
+    {% for el in posts %}
+    <li>
+        <h2>{{el.name}}</h2>
+        <p>{{el.created_at}}</p>
+        <hr>
+    </li>
+    {% endfor %}
 </ul>
-
 {% endblock %}

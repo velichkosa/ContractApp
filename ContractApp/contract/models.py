@@ -50,9 +50,9 @@ class Contract(models.Model):
     name = models.CharField(max_length=30)
     created_at = models.DateTimeField(editable=True, auto_now_add=True)
     blob = models.FileField(upload_to='files/%Y/%m/%d/')
-    do = models.ForeignKey(Org, verbose_name='DO', related_name="do", on_delete=models.CASCADE, default=1)
-    po = models.ForeignKey(Org, verbose_name='PO', related_name="po", on_delete=models.CASCADE, default=11)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    do = models.ForeignKey(Org, verbose_name='DO', related_name="do", on_delete=models.PROTECT, default=1)
+    po = models.ForeignKey(Org, verbose_name='PO', related_name="po", on_delete=models.PROTECT, default=11)
+    author = models.ForeignKey(User, on_delete=models.PROTECT, default=1)
 
     def __str__(self):
         return self.name
@@ -78,10 +78,10 @@ class Role(models.Model):
 
 
 class UserProfile(models.Model):  # добавляем в юсеров поля
-    user = models.OneToOneField(User, on_delete=models.CASCADE, default=1)
+    user = models.OneToOneField(User, on_delete=models.PROTECT, default=1)
     photo = models.ImageField(upload_to='photo/users', verbose_name='Фото')
-    role = models.ForeignKey(Role, on_delete=models.CASCADE)
-    org = models.ForeignKey(Org, on_delete=models.CASCADE)
+    role = models.ForeignKey(Role, on_delete=models.PROTECT)
+    org = models.ForeignKey(Org, on_delete=models.PROTECT)
 
     # def __str__(self):
     #     return f'{self.last_name} {self.first_name} - {self.org}'
@@ -123,8 +123,8 @@ class ContractRole(models.Model):
 
 class ContractUsers(models.Model):
 
-    contract = models.ForeignKey(Contract, on_delete=models.CASCADE)
-    users = models.ForeignKey(User, on_delete=models.CASCADE)
+    contract = models.ForeignKey(Contract, on_delete=models.PROTECT)
+    users = models.ForeignKey(User, on_delete=models.PROTECT)
 
     class Meta:
         verbose_name = 'Пользователи по договору'

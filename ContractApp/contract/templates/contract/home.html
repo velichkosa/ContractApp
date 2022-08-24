@@ -2,7 +2,8 @@
 {% load static %}
 {% block content %}
 <html>
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
@@ -10,78 +11,61 @@
     <!-- MDB icon -->
     <link rel="icon" href="{% static 'contract/img/mdb-favicon.ico' %}" type="image/x-icon" />
     <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <!-- Google Fonts Roboto -->
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
-    />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
     <!-- MDB -->
     <link rel="stylesheet" href="{% static 'contract/css/core.min.css' %}" />
-  </head>
-  <body>
-  <!-- Start your project here-->
+</head>
 
-
-      <section class="w-100 p-4 text-center">
+<body>
+    <!-- Start your project here-->
+    <section class="w-100 p-4 text-center">
         <table class="table">
-          <thead class="table-dark">
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">ДО</th>
-              <th scope="col">ПО</th>
-              <th scope="col">Название договора</th>
-              <th scope="col">Дата договора</th>
-
-            </tr>
-          </thead>
-          <tbody>
-            {% for el in contract %}
-
-            <tr>
-              <th scope="row">{{el.id}}</th>
-              <td>{{ el.do }}</td>
-              <td>{{ el.po }}</td>
-              <td><a href="{{ el.get_absolute_url }}"><p align="center">{{el.name}}</p></a></td>
-              <td>{{el.created_at}}</td>
-            </tr>
-
-            {% endfor %}
-          </tbody>
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">ДО</th>
+                    <th scope="col">ПО</th>
+                    <th scope="col">Название договора</th>
+                    <th scope="col">Дата договора</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for el in contract %}
+                <tr>
+                    <th scope="row">{{el.id}}</th>
+                    <td>{{ el.do }}</td>
+                    <td>{{ el.po }}</td>
+                    <td><a href="{{ el.get_absolute_url }}">
+                            <p align="center">{{el.name}}</p>
+                        </a></td>
+                    <td>{{el.created_at}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
         </table>
-      </section>
-
-
-
+    </section>
     <div class="p-4 text-center border-top mobile-hidden">
-      <a class="btn btn-link px-3" data-mdb-toggle="collapse" href="#example17" role="button" aria-expanded="true" aria-controls="example17" data-ripple-color="hsl(0, 0%, 67%)" style="">
-        <i class="fas fa-code me-md-2"></i>
-        <span class="d-none d-md-inline-block">
-          Show code
-        </span>
-      </a>
-
-
-        <a class="btn btn-link px-3 " data-ripple-color="hsl(0, 0%, 67%)">
-          <i class="fas fa-file-code me-md-2 pe-none"></i>
-          <span class="d-none d-md-inline-block export-to-snippet pe-none">
-            Edit in sandbox
-          </span>
+        <a class="btn btn-link px-3" data-mdb-toggle="collapse" href="#example17" role="button" aria-expanded="true" aria-controls="example17" data-ripple-color="hsl(0, 0%, 67%)" style="">
+            <i class="fas fa-code me-md-2"></i>
+            <span class="d-none d-md-inline-block">
+                Show code
+            </span>
         </a>
-
+        <a class="btn btn-link px-3 " data-ripple-color="hsl(0, 0%, 67%)">
+            <i class="fas fa-file-code me-md-2 pe-none"></i>
+            <span class="d-none d-md-inline-block export-to-snippet pe-none">
+                Edit in sandbox
+            </span>
+        </a>
     </div>
-
-
-
     <!-- End your project here-->
 
     <!-- MDB -->
     <script type="text/javascript" src="{% static 'contract/js/mdb.min.js'%}"></script>
     <!-- Custom scripts -->
     <script type="text/javascript"></script>
-  </body>
+</body>
 </html>
 {% endblock %}

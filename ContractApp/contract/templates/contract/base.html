@@ -1,63 +1,52 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>ContractApp</title>
     <!-- MDB icon -->
-
     <link rel="icon" href="{% static 'contract/img/mdb-favicon.ico' %}" type="image/x-icon" />
     <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <!-- Google Fonts Roboto -->
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"
-    />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
     <!-- MDB -->
     <link rel="stylesheet" href="{% static 'contract/css/core.min.css' %}" />
-  </head>
-  <body>
-  {% block mainmenu %}
-  <!-- Start your project here-->
+</head>
 
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-          <div class="container-fluid">
+<body>
+    {% block mainmenu %}
+    <!-- Start your project here-->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
             <a class="navbar-brand" href="/home/">ContractAPP</a>
             <button class="navbar-toggler collapsed" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-              <i class="fas fa-bars"></i>
+                <i class="fas fa-bars"></i>
             </button>
             <div class="navbar-collapse collapse" id="navbarColor02" style="">
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                  {% for m in menu %}
-	                {% if not forloop.last %}
-			        <li class="nav-item active"><a class="nav-link" aria-current="page" href="{% url m.url_name %}">{{m.title}}</a></li>
-	        {% else %}
-			<li class="nav-item active"><a class="nav-link" aria-current="page" href="{% url m.url_name %}">{{m.title}}</a></li>
-	        {% endif %}
-          {% endfor %}
-
-              </ul>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    {% for m in menu %}
+                    {% if not forloop.last %}
+                    <li class="nav-item active"><a class="nav-link" aria-current="page" href="{% url m.url_name %}">{{m.title}}</a></li>
+                    {% else %}
+                    <li class="nav-item active"><a class="nav-link" aria-current="page" href="{% url m.url_name %}">{{m.title}}</a></li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
             </div>
-          </div>
-        </nav>
-
-
-
-  <!-- End your project here-->
-  {% endblock mainmenu %}
+        </div>
+    </nav>
+    <!-- End your project here-->
+    {% endblock mainmenu %}
     <!-- MDB -->
     <script type="text/javascript" src="{% static 'contract/js/mdb.min.js'%}"></script>
     <!-- Custom scripts -->
     <script type="text/javascript"></script>
     {% block content %}
-
     {% endblock content %}
-  </body>
+</body>
+
 </html>
