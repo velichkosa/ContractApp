@@ -11,7 +11,7 @@ class UserInline(admin.StackedInline):
 
 # Определяем новый класс настроек для модели User
 class UserAdmin(UserAdmin):
-    inlines = (UserInline,)
+    inlines = [UserInline]
 
 
 # Перерегистрируем модель User
@@ -21,15 +21,15 @@ admin.site.register(User, UserAdmin)
 
 @admin.register(Contract)
 class ContractAdmin(admin.ModelAdmin):
-    list_display = ("id", "do", "po", "name", "blob", "author", "datecreated")
+    list_display = ("id", "do", "po", "name", "blob", "author", "created_at")
     list_display_links = ("id", "name", "do")
     search_fields = ["name", "do__name", "po__name"]
     list_filter = ["author"]
 
-    def datecreated(self, obj):
-        return obj.created_at
-
-    datecreated.short_description = 'datecreated'
+    # def datecreated(self, obj):
+    #     return obj.created_at
+    #
+    # datecreated.short_description = 'datecreated'
     verbose_name = 'Договора'
 
 

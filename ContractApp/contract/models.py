@@ -7,10 +7,10 @@ from django.contrib.auth.models import User
 class Org(models.Model):
 
     objects = None
-    name = models.CharField(max_length=100)
-    inn = models.IntegerField(blank=False)
-    kpp = models.CharField(max_length=30, blank=True, null=True)
-    city = models.CharField(max_length=30, blank=True, null=True)
+    name = models.CharField(max_length=100, verbose_name='Наименование')
+    inn = models.IntegerField(blank=False, verbose_name='ИНН')
+    kpp = models.CharField(max_length=30, blank=True, null=True, verbose_name='КПП')
+    city = models.CharField(max_length=30, blank=True, null=True, verbose_name='Город')
     do_atr1 = models.CharField(max_length=30, blank=True, null=True)
     do_atr2 = models.CharField(max_length=30, blank=True, null=True)
     do_atr3 = models.CharField(max_length=30, blank=True, null=True)
@@ -27,6 +27,7 @@ class Org(models.Model):
     class Meta:
         verbose_name = "Организации"
         verbose_name_plural = "Организации"
+        ordering = ['name']
 
 
 # class Interaction(models.Model):
@@ -47,12 +48,12 @@ class Contract(models.Model):
 
     # interaction = models.ForeignKey(Interaction, on_delete=models.CASCADE)
     objects = None
-    name = models.CharField(max_length=30)
-    created_at = models.DateTimeField(editable=True, auto_now_add=True)
-    blob = models.FileField(upload_to='files/%Y/%m/%d/')
-    do = models.ForeignKey(Org, verbose_name='DO', related_name="do", on_delete=models.PROTECT, default=1)
-    po = models.ForeignKey(Org, verbose_name='PO', related_name="po", on_delete=models.PROTECT, default=11)
-    author = models.ForeignKey(User, on_delete=models.PROTECT, default=1)
+    name = models.CharField(max_length=30, verbose_name='Название')
+    created_at = models.DateTimeField(editable=True, auto_now_add=True, verbose_name='Создан')
+    blob = models.FileField(upload_to='files/%Y/%m/%d/', verbose_name='Файл')
+    do = models.ForeignKey(Org, verbose_name='ДО', related_name="do", on_delete=models.PROTECT, default=1)
+    po = models.ForeignKey(Org, verbose_name='ПО', related_name="po", on_delete=models.PROTECT, default=11)
+    author = models.ForeignKey(User, on_delete=models.PROTECT, default=1, verbose_name='Автор')
 
     def __str__(self):
         return self.name
@@ -63,11 +64,12 @@ class Contract(models.Model):
     class Meta:
         verbose_name = "Договора"
         verbose_name_plural = "Договора"
+        ordering = ["name"]
 
 
 class Role(models.Model):
 
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=30, verbose_name='Наименование')
 
     def __str__(self):
         return self.name
@@ -75,13 +77,14 @@ class Role(models.Model):
     class Meta:
         verbose_name = "Должность"
         verbose_name_plural = "Должности"
+        ordering = ["name"]
 
 
 class UserProfile(models.Model):  # добавляем в юсеров поля
     user = models.OneToOneField(User, on_delete=models.PROTECT, default=1)
     photo = models.ImageField(upload_to='photo/users', verbose_name='Фото')
-    role = models.ForeignKey(Role, on_delete=models.PROTECT)
-    org = models.ForeignKey(Org, on_delete=models.PROTECT)
+    role = models.ForeignKey(Role, on_delete=models.PROTECT, verbose_name='ROLE_ID')
+    org = models.ForeignKey(Org, on_delete=models.PROTECT, verbose_name='ORG_ID')
 
     # def __str__(self):
     #     return f'{self.last_name} {self.first_name} - {self.org}'
@@ -96,14 +99,15 @@ class UserProfile(models.Model):  # добавляем в юсеров поля
 
 class ContractRole(models.Model):
 
-    contract = models.ForeignKey(Contract, on_delete=models.CASCADE, default='1')
-    role = models.ForeignKey(Role, on_delete=models.CASCADE, default='2')
+    contract = models.ForeignKey(Contract, on_delete=models.CASCADE, default='1', verbose_name='Договор')
+    role = models.ForeignKey(Role, on_delete=models.CASCADE, default='2', verbose_name='Должность')
     # contract = ManyToManyField(Contract)
     # role = ManyToManyField(Role)
 
     class Meta:
         verbose_name = 'Должность по договору'
         verbose_name_plural = 'Должности по договору'
+        ordering = ["pk"]
 
 
 # class Users(models.Model):
@@ -129,6 +133,7 @@ class ContractUsers(models.Model):
     class Meta:
         verbose_name = 'Пользователи по договору'
         verbose_name_plural = 'Пользователи по договору'
+        ordering = ["users"]
 
 
 # class Users(models.Model):
