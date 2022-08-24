@@ -112,5 +112,12 @@ class ContractRoleAdmin(admin.ModelAdmin):
     list_per_page = 15
 
 
+@admin.register(ContractType)
+class ContractTypeAdmin(admin.ModelAdmin):
+    list_display = ["id", "name"]
+    ordering = ["name"]
+    list_per_page = 15
+
+
 admin.site.site_header = "ContractApp"
 admin.site.index_title = "Консоль администратора"
