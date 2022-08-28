@@ -77,7 +77,7 @@ class Contract(models.Model):
     class Meta:
         verbose_name = "Договора"
         verbose_name_plural = "Договора"
-        ordering = ["name"]
+        # ordering = ["name"]
 
 
 class Role(models.Model):
