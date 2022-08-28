@@ -75,4 +75,4 @@ def addcontract(request):
         form = AddContractForm()
     po_list = Org.objects.all()
     contract_type = ContractType.objects.all()
-    return render(request, 'contract/addcontract.html', {'menu': menu, 'form': form, 'po_list': po_list})
+    return render(request, 'contract/addcontract.html', {'menu': menu, 'form': form, 'po_list': po_list, 'contract_type': contract_type})
