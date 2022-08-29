@@ -62,17 +62,17 @@ def contract_view(request, contract_id):
 
 def addcontract(request):
     if request.method == 'POST':
-        form = AddContractForm(request.POST)
+        form = AddContractForm(request.POST, request.FILES)
         if form.is_valid():
             # print(form.cleaned_data)
             # noinspection PyBroadException
-            try:
-                Contract.objects.create(**form.cleaned_data)
-                return redirect('home')
-            except Exception:
-                form.add_error(None, 'Ошибка добавления договора')
+            form.save()
+            return redirect('home')
+
     else:
         form = AddContractForm()
     po_list = Org.objects.all()
     contract_type = ContractType.objects.all()
     return render(request, 'contract/addcontract.html', {'menu': menu, 'form': form, 'po_list': po_list, 'contract_type': contract_type})
+
+

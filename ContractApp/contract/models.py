@@ -62,7 +62,7 @@ class Contract(models.Model):
     objects = None
     name = models.CharField(max_length=30, verbose_name='Название')
     created_at = models.DateTimeField(editable=True, auto_now_add=True, verbose_name='Создан')
-    blob = models.FileField(upload_to='files/%Y/%m/%d/', verbose_name='Файл')
+    blob = models.FileField(upload_to='files/%Y/%m/%d/', verbose_name='Файл',  null=True)
     do = models.ForeignKey(Org, verbose_name='ДО', related_name="do", on_delete=models.PROTECT, default=1)
     po = models.ForeignKey(Org, verbose_name='ПО', related_name="po", on_delete=models.PROTECT, default=11)
     author = models.ForeignKey(User, on_delete=models.PROTECT, default=1, verbose_name='Автор')
