@@ -1,11 +1,14 @@
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView
+
 from .forms import *
 from .utils import *
 # from collections import namedtuple
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
+
 
 menu = [
     {'title': "На главную", 'url_name': 'home'},
@@ -34,7 +37,7 @@ class Authentication(LoginView):
     template_name = 'contract/login.html'
 
     def get_success_url(self):
-        return reverse_lazy(home)
+        return reverse_lazy('home')
 
 
 def index(request):
@@ -46,10 +49,27 @@ def contract(request):
     return render(request, 'contract/contract.html', {'posts': posts})
 
 
-def home(request):
-    org = request.user.userprofile.org
-    get_contract = Contract.objects.filter(do_id=org.id).union(Contract.objects.filter(po_id=org.id))
-    return render(request, 'contract/home.html', {'menu': menu, 'contract': get_contract})
+class ContractHome(ListView):
+    model = Contract
+    template_name = 'contract/home.html'
+    # context_object_name = 'contract'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # context['menu'] = menu
+        context['title'] = 'Главная страница'
+        context['selected'] = 0
+        return context
+
+    def get_queryset(self):
+        org = self.request.user.userprofile.org
+        return Contract.objects.filter(do_id=org.id).union(Contract.objects.filter(po_id=org.id))
+
+
+# def home(request):
+#     org = request.user.userprofile.org
+#     get_contract = Contract.objects.filter(do_id=org.id).union(Contract.objects.filter(po_id=org.id))
+#     return render(request, 'contract/home.html', {'menu': menu, 'contract': get_contract})
 
 
 def test(request):
@@ -60,19 +80,36 @@ def contract_view(request, contract_id):
     return HttpResponse(f'DOGOVOR s ID= {contract_id}')
 
 
-def addcontract(request):
-    if request.method == 'POST':
-        form = AddContractForm(request.POST)
-        if form.is_valid():
-            # print(form.cleaned_data)
-            # noinspection PyBroadException
-            try:
-                Contract.objects.create(**form.cleaned_data)
-                return redirect('home')
-            except Exception:
-                form.add_error(None, 'Ошибка добавления договора')
-    else:
-        form = AddContractForm()
-    po_list = Org.objects.all()
-    contract_type = ContractType.objects.all()
-    return render(request, 'contract/addcontract.html', {'menu': menu, 'form': form, 'po_list': po_list})
+# class AddContract(ListView):
+#     model = Contract
+
+class AddContract(CreateView):
+    form_class = AddContractForm
+    template_name = 'contract/addcontract.html'
+    success_url = reverse_lazy('home')
+
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # context['menu'] = menu
+        context['title'] = 'Добавление договора'
+        context['selected'] = 1
+        return context
+
+
+# def addcontract(request):
+#     if request.method == 'POST':
+#         form = AddContractForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             # print(form.cleaned_data)
+#             # noinspection PyBroadException
+#             form.save()
+#             return redirect('home')
+#
+#     else:
+#         form = AddContractForm()
+#     po_list = Org.objects.all()
+#     contract_type = ContractType.objects.all()
+#     return render(request, 'contract/addcontract.html', {'menu': menu, 'form': form, 'po_list': po_list, 'contract_type': contract_type})
+
+

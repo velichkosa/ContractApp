@@ -46,6 +46,9 @@ class Org(models.Model):
 
 class ContractType(models.Model):
     name = models.CharField(max_length=30, verbose_name='Вид договора')
+    side_a = models.CharField(max_length=30, null=True, verbose_name='Сторона А (организатор)')
+    side_b = models.CharField(max_length=30, null=True, verbose_name='Сторона Б (потребитель)')
+
 
     def __str__(self):
         return self.name
@@ -60,13 +63,15 @@ class Contract(models.Model):
 
     # interaction = models.ForeignKey(Interaction, on_delete=models.CASCADE)
     objects = None
-    name = models.CharField(max_length=30, verbose_name='Название')
+    name = models.CharField(max_length=30, verbose_name='Номер договора')
     created_at = models.DateTimeField(editable=True, auto_now_add=True, verbose_name='Создан')
-    blob = models.FileField(upload_to='files/%Y/%m/%d/', verbose_name='Файл')
-    do = models.ForeignKey(Org, verbose_name='ДО', related_name="do", on_delete=models.PROTECT, default=1)
-    po = models.ForeignKey(Org, verbose_name='ПО', related_name="po", on_delete=models.PROTECT, default=11)
+    blob = models.FileField(upload_to='files/%Y/%m/%d/', verbose_name='Файл', null=True,)
+    do = models.ForeignKey(Org, verbose_name='Заказчик', related_name="do", on_delete=models.PROTECT, default=1)
+    po = models.ForeignKey(Org, verbose_name='Исполнитель', related_name="po", on_delete=models.PROTECT, default=11)
     author = models.ForeignKey(User, on_delete=models.PROTECT, default=1, verbose_name='Автор')
     type = models.ForeignKey(ContractType, on_delete=models.PROTECT, null=True, verbose_name='Вид договора')
+    date_at = models.DateTimeField(editable=True, null=True, verbose_name='Дата договора (от)')
+    date_to = models.DateTimeField(editable=True, null=True, verbose_name='Дата договора (до)')
 
     def __str__(self):
         return self.name
