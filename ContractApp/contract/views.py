@@ -84,6 +84,7 @@ def contract_view(request, contract_id):
 #     model = Contract
 
 class AddContract(CreateView):
+    model = Contract
     form_class = AddContractForm
     template_name = 'contract/addcontract.html'
     success_url = reverse_lazy('home')
@@ -93,8 +94,10 @@ class AddContract(CreateView):
         context = super().get_context_data(**kwargs)
         # context['menu'] = menu
         context['title'] = 'Добавление договора'
-        context['selected'] = 1
+        # context['selected'] = 1
         return context
+
+
 
 
 # def addcontract(request):

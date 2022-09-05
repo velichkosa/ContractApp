@@ -1,6 +1,7 @@
 from django import forms
 # from django.db.models import QuerySet
 from django.core.exceptions import ValidationError
+from django.template.context_processors import request
 
 from .models import *
 from .views import *
@@ -9,8 +10,11 @@ from .views import *
 class AddContractForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
         self.fields['type'].empty_label = 'Не выбрано'
-        self.fields['author'].empty_label = '1'
+        self.fields['do'].empty_label = 'Не выбрано'
+        self.fields['po'].empty_label = 'Не выбрано'
+        self.fields['author'].label = ""
 
     class Meta:
         model = Contract
@@ -24,25 +28,37 @@ class AddContractForm(forms.ModelForm):
                 # 'class': 'form-control form-group col-md-6 form-row',
                 'maxlength': 30,
                 'style': "width: 300px;",
-                'disabled': True}),
+                'disabled': True
+            }),
+            'date_at': forms.DateInput(attrs={'type': 'date'}),
+            'date_to': forms.DateInput(attrs={'type': 'date'}),
             'do': forms.Select(attrs={
                 # 'class': 'js-selectize',
                 'placeholder': 'до',
                 'style': "width: 325px;",
-                'disabled': True}),
+                'disabled': True
+                }),
             'po': forms.Select(attrs={
                 # 'class': 'js-selectize',
                 'placeholder': 'по',
                 'style': "width: 325px;",
-                'disabled': True}),
+                'disabled': True
+            }),
             # 'do': forms.TextInput(attrs={'type': 'text'}),
             # 'po': forms.TextInput(attrs={'type': 'text'}),
             'author': forms.Select(attrs={
                 # 'class': 'js-selectize',
                 'placeholder': 'по',
                 'style': "width: 325px;",
-                'disabled': True})
+                'disabled': False,
+                'hidden': 'hidden'
+            })
         }
+
+    # po = forms.ModelChoiceField(
+    #     # queryset = Org.objects.values('name',).filter(id__exact='21'),
+    #     queryset = Org.objects.all().filter(id__exact='21')
+    # )
 
     def clean_do(self):
         do = self.cleaned_data['do']

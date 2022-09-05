@@ -3,106 +3,162 @@
 {% block content %}
 
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>ContractApp</title>
     <!-- getbootstrap.com -->
-    <link rel="stylesheet" href="{% static 'contract/css/getbootstrap_com_min_css.css' %}"/>
+    <link rel="stylesheet" href="{% static 'contract/css/getbootstrap_com_min_css.css' %}" />
     <!-- MDB icon -->
-    <link rel="icon" href="{% static 'contract/img/mdb-favicon.ico' %}" type="image/x-icon"/>
+    <link rel="icon" href="{% static 'contract/img/mdb-favicon.ico' %}" type="image/x-icon" />
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <!-- Google Fonts Roboto -->
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
     <!-- MDB -->
-    <link rel="stylesheet" href="{% static 'contract/css/core.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'contract/css/core.min.css' %}" />
     <!--    -->
     <link rel="stylesheet" href="{% static 'contract/css/selectize.default.css' %}">
 </head>
 
 <body>
-<br>
+    <br>
 
-<!-- Start your project here-->
-<div class="form-row" style="margin: 10px 20px 30px 40px;">
+    <!-- Start your project here-->
+    <div class="form-row" style="margin: 10px 20px 30px 40px;">
 
-    <!--  -->
-    <form action="{% url 'addcontract' %}" enctype="multipart/form-data" method="POST">
-        {% csrf_token %}
-        <div class="'form-error">{{ form.non_field_errors }}</div>
-        {{ form.as_p }}
-        <p><label for="id_name">Автор договора: {{ user_name }}</label></p>
-        <button type="submit">Добавить</button>
-    </form>
-    <div id="result"></div>
-    <script type="text/javascript">
-        id_type = document.getElementById("id_type")
-        id_name = document.getElementById("id_name")
-
-        id_type.addEventListener("change", function () {
-            var id_value = id_type.value;
-            d = document.getElementById('id_name')
-            if (id_value !== '') {
-                d.removeAttribute("disabled");
-            } else {
-                d.setAttribute("disabled", "disabled");
-            }
+        <!--  -->
+        <form action="{% url 'addcontract' %}" enctype="multipart/form-data" method="POST">
+            {% csrf_token %}
+            <div class="'form-error">{{ form.non_field_errors }}</div>
+                {{ form.as_p }}
+            <button type="submit">Добавить</button>
 
 
+            <p><label>Автор договора: {{ request.user.username }} </label></p>
+            <p><label>Автор договора: {{ request.user.pk }} </label></p>
+            <p><label>Автор договора: {{ request.user.first_name }} </label></p>
+            <p><label>Автор договора: {{ request.user.last_name }} </label></p>
+            <p><label>Автор договора: {{ request.user.userprofile.org.pk }} </label></p>
+            <p><label>Автор договора: {{ request.user.userprofile.org.name }} </label></p>
+
+        </form>
+
+<!-- авторизованный пользователь-->
+<!--    {% if request.user.is_authenticated %}-->
+<!--        <p>User is logged in :)</p>-->
+<!--        <p>Username &ndash;&gt;  {{ request.user.username }}</p>-->
+<!--    {% else %}-->
+<!--        <p>User is not logged in :(</p>-->
+<!--    {% endif %}-->
+
+<!--    Установить значения элементам    -->
+<!--<script type="text/javascript">-->
+<!--    document.querySelector("#id_author").value = "{{ request.user.pk }}";-->
+<!--     document.querySelector("#id_do").value = "{{ request.user.userprofile.org.pk }}";-->
+<!--</script>-->
+
+        <div id="result"></div>
+        <script type="text/javascript">
+id_type = document.getElementById("id_type")
+id_name = document.getElementById("id_name")
+result = document.getElementById('result');
+id_do = document.getElementById('id_do');
+id_po = document.getElementById("id_po")
+const_org_id = `{{ request.user.userprofile.org.pk }}`;
+const_org_name = `{{ request.user.userprofile.org.name|safe }}`;
+
+<!--id_do.value = "21";-->
+
+
+
+<!--ID_TYPE ACTION-->
+id_type.addEventListener("change", function () {
+  var id_value = id_type.value;
+  d = document.getElementById('id_name')
+  if (id_value !== '') {
+    d.removeAttribute("disabled");
+  } else {
+    d.setAttribute("disabled", "disabled");
+  }
+});
+
+<!--INPUT NAME ACTION-->
+const inputHandler = function (e) {
+  if (id_name.value == '') {
+    // alert("Hello");
+    id_do.setAttribute("disabled", "disabled");
+  }
+  if (id_name.value != '') {
+    id_do.removeAttribute("disabled");
+  }
+  result.innerHTML = e.target.value;
+}
+id_name.addEventListener('input', inputHandler);
+id_name.addEventListener('propertychange', inputHandler);
+
+
+<!--ID_DO SELECT ACTION-->
+id_do.addEventListener("change", function () {
+  var id_do_value = id_do.value;
+  if (id_do_value == '') {
+    id_po.setAttribute("disabled", "disabled");
+  } else if (id_do_value == const_org_id) {
+    id_po.innerHTML = id_do.innerHTML
+    id_po.removeAttribute("disabled");
+    option = id_po.querySelector('option[value="'+const_org_id+'"]');
+    option.parentNode.removeChild(option);
+  } else if (id_do_value != const_org_id){
+  while (id_po.options.length) {
+  id_po.options[0] = null;
+   }
+  id_po.append(new Option(const_org_name, const_org_id));
+  id_po.removeAttribute("disabled");
+  }else if (id_do_value != '') {
+    id_po.removeAttribute("disabled");
+    }
+  });
+
+id_author.value = {{ request.user.pk }};
+
+        </script>
+
+<!--        end-->
+
+<!--<script type="text/javascript">-->
+<!--    function findOption(select) {-->
+<!--   const option = select.querySelector(`option[value="${select.value}"]`)-->
+<!--   // Действия над option-->
+<!--}-->
+<!--</script>-->
+
+    </div>
+    <!-- End your project here-->
+
+    <!--    my script-->
+    <!--       <script type="text/javascript" src="{% static 'contract/js/addcontract_radio.js' %}"></script>-->
+    <!-- MDB -->
+    <script type="text/javascript" src="{% static 'contract/js/mdb.min.js' %}"></script>
+    <!-- Custom scripts -->
+    <script type="text/javascript"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!--    <script src="{% static 'contract/js/jquery.min.js' %}"></script>-->
+    <!--    <script src="{% static 'contract/js/microplugin/src/microplugin.js' %}"></script>-->
+    <!--    <script src="{% static 'contract/js/sifter/sifter.min.js' %}"></script>-->
+    <!--    <script src="{% static 'contract/js/selectize/dist/js/selectize.min.js' %}"></script>-->
+    <script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://snipp.ru/cdn/microplugin.js/src/microplugin.js"></script>
+    <script src="https://snipp.ru/cdn/sifter.js/sifter.min.js"></script>
+    <script src="https://snipp.ru/cdn/selectize.js/0.12.6/dist/js/selectize.min.js"></script>
+
+    <!--    selectize js for selectize -->
+    <script>
+        $(document).ready(function() {
+            $('.js-selectize').selectize();
         });
     </script>
-
-    <script type="text/javascript">
-
-        const source = document.getElementById('id_name');
-        const result = document.getElementById('result');
-
-        const inputHandler = function (e) {
-
-
-            result.innerHTML = e.target.value;
-        }
-
-        source.addEventListener('input', inputHandler);
-        source.addEventListener('propertychange', inputHandler);
-
-
-    </script>
-</div>
-<!-- End your project here-->
-
-<!--    my script-->
-<!--       <script type="text/javascript" src="{% static 'contract/js/addcontract_radio.js' %}"></script>-->
-<!-- MDB -->
-<script type="text/javascript" src="{% static 'contract/js/mdb.min.js' %}"></script>
-<!-- Custom scripts -->
-<script type="text/javascript"></script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
-<!--    <script src="{% static 'contract/js/jquery.min.js' %}"></script>-->
-<!--    <script src="{% static 'contract/js/microplugin/src/microplugin.js' %}"></script>-->
-<!--    <script src="{% static 'contract/js/sifter/sifter.min.js' %}"></script>-->
-<!--    <script src="{% static 'contract/js/selectize/dist/js/selectize.min.js' %}"></script>-->
-<script src="https://snipp.ru/cdn/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://snipp.ru/cdn/microplugin.js/src/microplugin.js"></script>
-<script src="https://snipp.ru/cdn/sifter.js/sifter.min.js"></script>
-<script src="https://snipp.ru/cdn/selectize.js/0.12.6/dist/js/selectize.min.js"></script>
-
-<!--    selectize js for selectize -->
-<script>
-    $(document).ready(function () {
-        $('.js-selectize').selectize();
-    });
-</script>
-<!--    end selectize -->
+    <!--    end selectize -->
 </body>
 {% endblock %}
