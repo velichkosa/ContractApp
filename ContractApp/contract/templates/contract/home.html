@@ -7,11 +7,14 @@
             <thead class="table-dark">
                 <tr>
                     <th scope="col">ID</th>
-                    <th scope="col">ДО</th>
-                    <th scope="col">ПО</th>
-                    <th scope="col">Название договора</th>
+                    <th scope="col">Заказчик</th>
+                    <th scope="col">Исполнитель</th>
+                    <th scope="col">Номер договора</th>
                     <th scope="col">Тип договора</th>
-                    <th scope="col">Дата договора</th>
+                    <th scope="col">Автор</th>
+                    <th scope="col">Дата договора (от)</th>
+                    <th scope="col">Дата договора (до)</th>
+                    <th scope="col">Добавлен</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,7 +27,10 @@
                             <p align="left">{{el.name}}</p>
                         </a></td>
                     <td><p align="left">{{ el.type }}</p></td>
-                    <td><p align="left">{{el.created_at}}</p></td>
+                    <td><p align="left">{{ el.author.first_name }} {{ el.author.last_name }}</p></td>
+                    <td><p align="left">{{el.date_at|date:"d.m.Y"}}</p></td>
+                    <td><p align="left">{{el.date_to|date:"d.m.Y"}}</p></td>
+                    <td><p align="left">{{el.created_at|date:"d.m.Y"}}</p></td>
                 </tr>
                 {% endfor %}
             </tbody>
