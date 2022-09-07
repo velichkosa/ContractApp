@@ -3,10 +3,10 @@
 {% block content %}
 <!-- Start your project here-->
 <section class="w-100 p-4 text-center">
-<div class="scroll-table" >
- <table class="table">
-            <thead class="table-dark">
-                <tr>
+<div class="scroll-table">
+	<table>
+		<thead>
+			<tr>
                     <th scope="col">ID</th>
                     <th scope="col">Заказчик</th>
                     <th scope="col">Исполнитель</th>
@@ -17,12 +17,12 @@
                     <th scope="col">Дата договора (до)</th>
                     <th scope="col">Добавлен</th>
                 </tr>
-            </thead>
-        </table>
+		</thead>
+	</table>
 	<div class="scroll-table-body">
-		<table id="data_table" class="table">
+		<table id="data_table">
 			<tbody>
-                {% for el in object_list %}
+				{% for el in object_list %}
                 <tr>
                     <th scope="row">{{el.id}}</th>
                     <td>
@@ -51,7 +51,6 @@
                     </td>
                 </tr>
                 {% endfor %}
-
 			</tbody>
 		</table>
 	</div>
