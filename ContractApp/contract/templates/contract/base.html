@@ -93,12 +93,21 @@
     height: -webkit-fill-available;
     width: -webkit-fill-available;
     }
+
+    .full_page {
+    position: absolute;
+    height: -webkit-fill-available;
+    width: -webkit-fill-available;
+    }
+
+
 </style>
 <!-- Custom styles for this template -->
 <link href="{% static 'contract/css/sidebars.css' %}" rel="stylesheet">
+<link href="{% static 'contract/css/scroll.css' %}" rel="stylesheet">
 </head>
 <body>
-
+<div class="full-page">
     {% block mainmenu %}
     <!-- Start your project here-->
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -208,9 +217,10 @@
                     </a>
                 </li>
             </ul>
-
-            <hr>
             {% if request.user.is_authenticated %}
+            <strong>{{ request.user.userprofile.org.name }}</strong>
+            <hr>
+
             <div class="dropdown">
                 <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
@@ -250,7 +260,7 @@
         </ul>
 
         <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-          <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
+          <input id="search_box" onkeyup="myFunction()" type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
         </form>
 
 <!--        <div class="text-end">-->
@@ -266,6 +276,7 @@
     {% endblock content %}
     </div>
     </div>
+    </div>
     <script src="{% static 'contract/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'contract/js/sidebars.js' %}"></script>
     <script src="{% static 'contract/js/myscript.js' %}"></script>
@@ -275,6 +286,28 @@
                 el.classList.add("active");
             }
         });
+    </script>
+<!--поиск-->
+    <script type="text/javascript">
+        function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("search_box");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("data_table");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+
     </script>
 
     <!-- MDB -->
