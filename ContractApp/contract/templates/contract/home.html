@@ -2,25 +2,43 @@
 {% load static %}
 {% block content %}
 <!-- Start your project here-->
-<section class="w-100 p-4 text-center">
-<div class="scroll-table">
+<section class="w-100 p-4 text-center" style="position: absolute; top: 70px;">
+<div class="scroll-table" style="position: fixed;">
 	<table>
+                    	<col style="width:3%">
+	            <col style="width:15%">
+	            <col style="width:15%">
+                <col style="width:15%">
+	            <col style="width:10%">
+	            <col style="width:10%">
+                <col style="width:7%">
+	            <col style="width:7%">
+	            <col style="width:7%">
 		<thead>
 			<tr>
                     <th scope="col">ID</th>
                     <th scope="col">Заказчик</th>
                     <th scope="col">Исполнитель</th>
-                    <th scope="col">Номер договора</th>
-                    <th scope="col">Тип договора</th>
+                    <th scope="col">Номер</th>
+                    <th scope="col">Тип</th>
                     <th scope="col">Автор</th>
-                    <th scope="col">Дата договора (от)</th>
-                    <th scope="col">Дата договора (до)</th>
+                    <th scope="col">Дата (от)</th>
+                    <th scope="col">Дата (до)</th>
                     <th scope="col">Добавлен</th>
                 </tr>
 		</thead>
 	</table>
-	<div class="scroll-table-body">
+	<div class="scroll-table-body" >
 		<table id="data_table">
+            	<col style="width:3%">
+	            <col style="width:15%">
+	            <col style="width:15%">
+                <col style="width:15%">
+	            <col style="width:10%">
+	            <col style="width:10%">
+                <col style="width:7%">
+	            <col style="width:7%">
+	            <col style="width:7%">
 			<tbody>
 				{% for el in object_list %}
                 <tr>

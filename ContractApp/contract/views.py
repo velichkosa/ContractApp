@@ -9,6 +9,9 @@ from .utils import *
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 
+from django.utils import timezone
+
+now = timezone.now()
 
 menu = [
     {'title': "На главную", 'url_name': 'home'},
@@ -59,6 +62,7 @@ class ContractHome(ListView):
         # context['menu'] = menu
         context['title'] = 'Главная страница'
         context['selected'] = 0
+        context['time_now'] = now
         return context
 
     def get_queryset(self):

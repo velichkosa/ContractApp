@@ -1,6 +1,10 @@
 {% load static %}
+{% load tz %}
+{% timezone "Europe/Moscow" %}
 <!DOCTYPE html>
 <html>
+
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -173,7 +177,7 @@
 
     <main class="d-flex flex-nowrap">
         <h1 class="visually-hidden">Sidebars examples</h1>
-        <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px;">
+        <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" style="width: 280px; height: -webkit-fill-available; position: fixed;">
             <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                 <svg class="bi pe-none me-2" width="40" height="32">
                     <use xlink:href="#bootstrap" /></svg>
@@ -250,7 +254,7 @@
     {% endblock mainmenu %}
     </div>
 <div class="right_view">
-    <header class="p-3 text-bg-dark">
+<header class="p-3 text-bg-dark" style="position: fixed; width: -webkit-fill-available;">
     <div class="container">
       <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
 
@@ -274,9 +278,27 @@
     {% block content %}
 
     {% endblock content %}
+        <div class="footer_bottom" style="position: absolute; bottom: 0; width: -webkit-fill-available;">
+<footer class="text-center text-white">
+
+  <!-- Copyright -->
+  <div style="background-color: RGBA(33, 37, 41, var(--bs-bg-opacity, 1)) !important; height: 65px; position: fixed; bottom: 0; width: -webkit-fill-available;">
+    <a class="text-white" href="https://mdbootstrap.com/">
+            Текущее время: {% now "H:i" %}
+
+
+
+</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+</div>
+</div>
     </div>
+
     </div>
-    </div>
+
+
     <script src="{% static 'contract/js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'contract/js/sidebars.js' %}"></script>
     <script src="{% static 'contract/js/myscript.js' %}"></script>
@@ -315,4 +337,7 @@
     <!-- Custom scripts -->
     <script type="text/javascript"></script>
 </body>
+
+
 </html>
+{% endtimezone %}
