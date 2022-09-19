@@ -2,7 +2,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView
-
+from django.http import JsonResponse
 from .forms import *
 from .utils import *
 # from collections import namedtuple
@@ -19,6 +19,7 @@ menu = [
 ]
 
 
+
 # def namedtuplefetchall(cursor):
 #     "Return all rows from a cursor as a namedtuple"
 #     desc = cursor.description
@@ -33,7 +34,13 @@ menu = [
 #         dict(zip(columns, row))
 #         for row in cursor.fetchall()
 #     ]
-
+def my_api_view(request):
+    data = {
+        'name': request.user.username,  # username of current logged-in user, otherwise Anonymous
+        'url': 'https://www.pyscoop.com/',
+        'skills': ['Python', 'Django'],
+    }
+    return JsonResponse(data)
 
 class Authentication(LoginView):
     form_class = AuthenticationForm

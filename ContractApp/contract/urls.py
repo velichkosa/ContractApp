@@ -3,6 +3,7 @@ from .views import *
 
 
 urlpatterns = [
+    path('awesome-api/', my_api_view),
     path('', Authentication.as_view(), name='login'),
     path('test/', test),
     path('contract/', contract),

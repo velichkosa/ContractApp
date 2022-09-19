@@ -1,6 +1,6 @@
 {% load static %}
 {% load tz %}
-{% timezone "Europe/Moscow" %}
+
 <!DOCTYPE html>
 <html>
 
@@ -22,6 +22,23 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
     <!-- MDB -->
     <link rel="stylesheet" href="{% static 'contract/css/core.min.css' %}" />
+
+
+
+
+
+    <!-- getbootstrap.com -->
+    <link rel="stylesheet" href="{% static 'contract/css/getbootstrap_com_min_css.css' %}" />
+    <!-- MDB icon -->
+    <link rel="icon" href="{% static 'contract/img/mdb-favicon.ico' %}" type="image/x-icon" />
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" />
+    <!-- MDB -->
+    <link rel="stylesheet" href="{% static 'contract/css/core.min.css' %}" />
+    <!--    -->
+    <link rel="stylesheet" href="{% static 'contract/css/selectize.default.css' %}">
 </head>
 <style>
     .bd-placeholder-img {
@@ -280,7 +297,7 @@
     {% endblock content %}
         <div class="footer_bottom" style="position: absolute; bottom: 0; width: -webkit-fill-available;">
 <footer class="text-center text-white">
-
+{% timezone "Europe/Moscow" %}
   <!-- Copyright -->
   <div style="background-color: RGBA(33, 37, 41, var(--bs-bg-opacity, 1)) !important; height: 65px; position: fixed; bottom: 0; width: -webkit-fill-available;">
     <a class="text-white" href="https://mdbootstrap.com/">

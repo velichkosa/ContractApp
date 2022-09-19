@@ -15,6 +15,8 @@ class AddContractForm(forms.ModelForm):
         self.fields['do'].empty_label = 'Не выбрано'
         self.fields['po'].empty_label = 'Не выбрано'
         self.fields['author'].label = ""
+        self.fields['date_to'].input_formats = ['%Y-%m-%d']
+        self.fields['date_at'].input_formats = ['%Y-%m-%d']
 
     class Meta:
         model = Contract

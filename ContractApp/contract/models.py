@@ -70,8 +70,8 @@ class Contract(models.Model):
     po = models.ForeignKey(Org, verbose_name='Исполнитель', related_name="po", on_delete=models.PROTECT)
     author = models.ForeignKey(User, on_delete=models.PROTECT, default=1, verbose_name='Автор')
     type = models.ForeignKey(ContractType, on_delete=models.PROTECT, null=True, verbose_name='Вид договора')
-    date_at = models.DateTimeField(editable=True, null=True, verbose_name='Дата договора (от)')
-    date_to = models.DateTimeField(editable=True, null=True, verbose_name='Дата договора (до)')
+    date_at = models.DateField(editable=True, null=True, verbose_name='Дата договора (от)')
+    date_to = models.DateField(editable=True, null=True, verbose_name='Дата договора (до)')
 
     def __str__(self):
         return self.name
